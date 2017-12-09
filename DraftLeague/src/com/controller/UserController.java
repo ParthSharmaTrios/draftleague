@@ -58,6 +58,19 @@ public class UserController {
         return "register";
     }
 
+    @RequestMapping(value = "/dashboard.html", method = RequestMethod.GET)
+    public String dashboard(HttpServletRequest request, User user, ModelMap map) {  // http://ip:port/appname/dashboard.html
+        //boolean SessionExt = userDAO.checkSession(request);
+    	System.out.println("DashBoard:" + userDAO.checkSession(request));
+    	if ( userDAO.checkSession(request)) {
+            return "dashboard";
+        }
+       // map.addAttribute("countryList", locationController.countryList(false));
+        return "login";
+    }
+
+    
+    
     @RequestMapping(value = "/login.html", method = RequestMethod.POST)
     public String login(HttpServletRequest request, User user, ModelMap map) {  // http://ip:port/appname/login.html
     	System.out.println("entered login post");
@@ -65,7 +78,11 @@ public class UserController {
         	System.out.println("entered for validationg user");
 
             request.getSession().setAttribute("user", user);
-            return "index";
+           // request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("username", user.getName());
+            request.getSession().setAttribute("name",user.getUsername());
+            
+            return "dashboard";
         }
         map.addAttribute("error", "invalid username and/or password");
         System.out.println("just before return login");
@@ -78,6 +95,9 @@ public class UserController {
         int flag  = userDAO.registerUser(user);
         if (flag == 1) {
             request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("username", user.getName());
+            request.getSession().setAttribute("name",user.getUsername());
+            
             return "redirect:/";
         } else if(flag == -1)
             map.addAttribute("error", "username is not available");
