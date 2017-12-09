@@ -1,4 +1,4 @@
-function validateLogin() {
+ function validateLogin() {
     var username = $("#username").val().trim();
     var password = document.getElementById("password").value.trim();
 

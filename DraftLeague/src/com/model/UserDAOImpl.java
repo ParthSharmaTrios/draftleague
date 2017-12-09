@@ -34,6 +34,7 @@ public class UserDAOImpl implements UserDAO {
 
                 user.setId(rs.getInt(1));
                 user.setName(rs.getString(2));
+                user.setUsername(rs.getString(4));
                 user.setPhone(rs.getString(5));
                 user.setEmail(rs.getString(6));
                 return true;
