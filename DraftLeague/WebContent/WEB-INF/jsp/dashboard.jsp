@@ -39,6 +39,7 @@
               <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= session.getAttribute("username") %></a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">
                 <a class="dropdown-item" href="/profile">Profile</a>
+                <a class="dropdown-item" href="/DraftLeague/AccountSettings.html">Account Settings</a>
                 <a class="dropdown-item" href="/DraftLeague/logout.html">Logout</a>
               </div>
         </li>
@@ -55,7 +56,7 @@
 
 <div class="container">
 
-	<h1>Welcome Name: <%= session.getAttribute("name") %></h1>
+	<h1>Welcome Name: <%= session.getAttribute("username") %></h1>
 	<br />
 	<h3>Collapsible Navbar</h3>
 	<p>In this example, the navigation bar is hidden on small screens and replaced by a button in the top right corner (try to re-size this window).

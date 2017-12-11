@@ -51,6 +51,21 @@ function validateRegister() {
         return true;
     }
 }
+function ValidateUpdateUser()
+{
+		var password = document.getElementById("password").value;
+	    var phone = document.getElementById("phone").value;
+	    if (phone === "") {
+	        alert("Please enter phone");
+	        return false;
+	    }else if (password === "") {
+	        alert("Please enter password");
+	        return false;
+	    }else {
+	        return true;
+	    }
+	    
+	}
 
 function validateProfile() {
     var name = document.getElementById("name").value;
