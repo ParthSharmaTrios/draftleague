@@ -235,4 +235,35 @@ public class UserDAOImpl implements UserDAO {
 
     //till here
     
+    
+    
+    public boolean checkSport(String user) {
+    	String encrptPassword="";
+        Connection con = null;
+        try {
+        	System.out.println("entered for login checking");
+        	con = DBConnection.getDBConnection();
+            Statement stmt = con.createStatement();
+            
+            System.out.println("select * from sports where (sportName= '"+user.toString() + "')") ;
+            ResultSet rs = stmt.executeQuery("select * from sports where (sportName= '"+user.toString() + "')");
+            if (rs.next()) {
+            	System.out.println("entered resultset");
+
+                return true;
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                } catch (SQLException ex) {
+                }
+            }
+        }
+        return false;
+    }
+
+    
 }

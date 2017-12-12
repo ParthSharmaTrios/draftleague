@@ -4,6 +4,7 @@ import com.common.User;
 import com.model.DBConnection;
 import com.model.UserDAO;
 import com.model.MailService;
+import com.model.Validations;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 //@RequestMapping("/user")
 public class UserController {
     
-    @Autowired
+    private static final User User = null;
+
+	@Autowired
     private UserDAO userDAO;
     
     @Autowired
@@ -165,18 +168,7 @@ public class UserController {
 	
 	
 	
-	@RequestMapping(value="/Sport/{name}", method= RequestMethod.GET)
-    public String SportPage(@PathVariable(value="name") String name, ModelMap map) {
-
-        //Normally the parameter would be used to retrieve the object
-        //In this case we keep it simple and return the name
-      
-
-        
-        map.addAttribute("SportName", name);
-
-        return "SportPage";
-    }
+	
 	
 	
 	

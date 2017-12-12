@@ -13,5 +13,6 @@ public interface UserDAO {
     public boolean updateProfile(User newUser);
     public boolean updatePassword(int id, String newpass);
     public boolean checkSession(HttpServletRequest request);
+    public boolean checkSport(String sportName);
   
 }
