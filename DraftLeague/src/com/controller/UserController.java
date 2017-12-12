@@ -3,8 +3,10 @@ package com.controller;
 import com.common.User;
 import com.model.DBConnection;
 import com.model.UserDAO;
-import com.model.MailService;
 import com.model.Validations;
+import com.model.MailService;
+
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 //@RequestMapping("/user")
 public class UserController {
     
-    private static final User User = null;
-
-	@Autowired
+    @Autowired
     private UserDAO userDAO;
     
     @Autowired
@@ -55,7 +55,7 @@ public class UserController {
     public String register(HttpServletRequest request, ModelMap map) {  // http://ip:port/appname/register.html
         DBConnection.fillDBInfo("db");
         //boolean SessionExt = userDAO.checkSession(request);
-    	if ( userDAO.checkSession(request)) {
+    	if (userDAO.checkSession(request)) {
             return "redirect:/";
         }
        // map.addAttribute("countryList", locationController.countryList(false));
@@ -73,7 +73,17 @@ public class UserController {
         return "login";
     }
 
-    
+    @RequestMapping(value = "/AccountSettings.html", method = RequestMethod.GET)
+    public String AccountSettings(HttpServletRequest request) {  // http://ip:port/appname/AccountSettings.html
+        //boolean SessionExt = userDAO.checkSession(request);
+    	System.out.println("AccountSettings:" + userDAO.checkSession(request));
+    	if ( userDAO.checkSession(request)) {
+            return "AccountSettings";
+        }
+       // map.addAttribute("countryList", locationController.countryList(false));
+        return "dashboard";
+    }
+
     
     @RequestMapping(value = "/login.html", method = RequestMethod.POST)
     public String login(HttpServletRequest request, User user, ModelMap map) {  // http://ip:port/appname/login.html
@@ -83,9 +93,11 @@ public class UserController {
 
             request.getSession().setAttribute("user", user);
            // request.getSession().setAttribute("user", user);
-            request.getSession().setAttribute("username", user.getName());
-            request.getSession().setAttribute("name",user.getUsername());
-            
+            request.getSession().setAttribute("name", user.getName());
+            request.getSession().setAttribute("username",user.getUsername());
+            request.getSession().setAttribute("phone", user.getPhone());
+            request.getSession().setAttribute("Id", user.getId());
+           
             return "dashboard";
         }
         map.addAttribute("error", "invalid username and/or password");
@@ -99,10 +111,14 @@ public class UserController {
         int flag  = userDAO.registerUser(user);
         if (flag == 1) {
             request.getSession().setAttribute("user", user);
-            request.getSession().setAttribute("username", user.getName());
-            request.getSession().setAttribute("name",user.getUsername());
+            request.getSession().setAttribute("name", user.getName());
+            request.getSession().setAttribute("username",user.getUsername());
+            request.getSession().setAttribute("phone", user.getPhone());
+            request.getSession().setAttribute("Id", user.getId());
             
-            return "redirect:/";
+            
+            
+            return "dashboard";
         } else if(flag == -1)
             map.addAttribute("error", "username is not available");
         else
@@ -110,6 +126,22 @@ public class UserController {
        // map.addAttribute("countryList", locationController.countryList(false));
         return "register";
     }
+    
+    @RequestMapping(value = "/AccountSettings.html", method = RequestMethod.POST)
+     public String AccountSettings(HttpServletRequest request, User user, ModelMap map) {  // http://ip:port/appname/register.html
+        boolean flag  = userDAO.updateProfile(user,request);
+        if (flag) {
+        	
+            
+            
+            return "dashboard";
+        } else
+            map.addAttribute("error", "Operation failed...");
+       // map.addAttribute("countryList", locationController.countryList(false));
+        return "AccountSettings";
+    }
+   
+    
     @RequestMapping(value = "/logout.html", method = RequestMethod.GET)
     public String logout(HttpServletRequest request) {  // http://ip:port/appname/logout.html
         
@@ -140,7 +172,7 @@ public class UserController {
 	
 	
 	@RequestMapping(value = "/ForgotPassword.html", method = RequestMethod.POST)
-    public String checkUserAlreadyExist(HttpServletRequest request, User user, ModelMap map) {  // http://ip:port/appname/login.html
+    public String checkUserAlreadyExist(HttpServletRequest request, User user, ModelMap map) {  // http://ip:port/appname/ForgotPassword.html
     	System.out.println("entered login post");
     	if (userDAO.validateEmail(user)) {
         	System.out.println("entered for validationg user");
@@ -161,27 +193,41 @@ public class UserController {
     }
 
 	
-	
-	//SportPage Routes
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@RequestMapping(value="/Sport/{name}", method= RequestMethod.GET)
+    public String SportPage(@PathVariable(value="name") String name, ModelMap map) {
 
+		Validations vs= new Validations();
+		
+		if(vs.checkSport(name.toString())) {
+			map.addAttribute("SportName", name);
+			return "SportPage";
+		}
+		else {
+			return "404";
+		}
+		       
+           
+    }
+	
+	
+	@RequestMapping(value="/createLeague/{name}", method= RequestMethod.GET)
+    public String CreateNewLeague(@PathVariable(value="name") String name, ModelMap map) {
+
+		Validations vs= new Validations();
+		
+		if(vs.checkSport(name.toString())) {
+			map.addAttribute("SportName", name);
+			map.addAttribute("SportId",vs.getSportId(name));
+			return "CreateNewLeague";
+		}
+		else {
+			return "404";
+		}
+		       
+           
+    }
+	
+	
+	 
 
 }

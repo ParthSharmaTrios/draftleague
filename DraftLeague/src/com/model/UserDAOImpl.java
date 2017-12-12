@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.io.*;
+import java.net.URL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,7 +33,7 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = stmt.executeQuery("select * from users where (email= '"+user.getUsername() +"' or username='" + user.getUsername() + "')" + (encrptPassword == null ? "" : " and password='" + encrptPassword + "'"));
             if (rs.next()) {
             	System.out.println("entered resultset");
-
+            	System.out.println("user id"+rs.getInt(1)+"name"+rs.getString(2)+"username"+rs.getString(4)+""+rs.getString(5));
                 user.setId(rs.getInt(1));
                 user.setName(rs.getString(2));
                 user.setUsername(rs.getString(4));
@@ -112,17 +114,64 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean updateProfile(User newUser) {
+    
+    public boolean updateProfile(User newUser,HttpServletRequest request) {
+    	 HttpSession session = request.getSession();
+         
         Connection con = null;
         try {
+        	String newPassword = (String)request.getParameter("password");
+        	String phoneNo= (String)request.getParameter("phone");
+        	String uname = (String)session.getAttribute("username");
+        	String name = (String)session.getAttribute("name");
+        	String photourl = (String)request.getParameter("photo");
+        	System.out.println("photo "+photourl);
+        	
+        	int userId= (int)session.getAttribute("Id");
+        	System.out.println("New pass "+newPassword+" new phone "+phoneNo+"user id "+ userId+" tryname"+uname+" name "+name);
+        	String  encrpPassword = cryptWithMD5(newPassword);
+        	// from here@@@@@@@@@@@@@@@@@
+        	String destinationFile = "/images/sunil.jpeg";
+        	try
+        	{
+        	URL url = new URL(photourl);
+            InputStream is = url.openStream();
+            OutputStream os = new FileOutputStream(new File(destinationFile));
+            byte[] b = new byte[2048];
+            int length;
+
+            while ((length = is.read(b)) != -1) {
+                os.write(b, 0, length);
+            }
+
+            is.close();
+            os.close();
+        	}
+        	catch(Exception  ex)
+        	{
+        		System.out.println("ex"+ex);
+        	}
+        	
+
+        	 
+           // String ImgUrl = (String)request.getParameter("photo");
+             // System.out.println("Image"+ImgUrl);
+        	// till here @@@@@@@@@@@@@@@@@@@@@@@@
             con = DBConnection.getDBConnection();
-            PreparedStatement pstmt = con.prepareStatement("update users set name=?, email=?, phoneno=? where id=?");
+            PreparedStatement pstmt = con.prepareStatement("update users set password=?, phoneno=? where userid=?");
             int i = 1;
-            pstmt.setString(i++, newUser.getName());
-            pstmt.setString(i++, newUser.getEmail());
-            pstmt.setString(i++, newUser.getPhone());
-            pstmt.setInt(i++, newUser.getId());
+            pstmt.setString(i++,encrpPassword);
+            pstmt.setString(i++, phoneNo);
+            pstmt.setInt(i++, userId);
+            System.out.println(pstmt);
             pstmt.executeUpdate();
+            request.getSession().setAttribute("phone", phoneNo);
+            request.getSession().setAttribute("Id", userId);
+            request.getSession().setAttribute("username",uname);
+            request.getSession().setAttribute("name", name);
+            
+            
+           
             return true;
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
@@ -234,36 +283,5 @@ public class UserDAOImpl implements UserDAO {
     }
 
     //till here
-    
-    
-    
-    public boolean checkSport(String user) {
-    	String encrptPassword="";
-        Connection con = null;
-        try {
-        	System.out.println("entered for login checking");
-        	con = DBConnection.getDBConnection();
-            Statement stmt = con.createStatement();
-            
-            System.out.println("select * from sports where (sportName= '"+user.toString() + "')") ;
-            ResultSet rs = stmt.executeQuery("select * from sports where (sportName= '"+user.toString() + "')");
-            if (rs.next()) {
-            	System.out.println("entered resultset");
-
-                return true;
-            }
-        } catch (SQLException | ClassNotFoundException ex) {
-            ex.printStackTrace();
-        } finally {
-            if (con != null) {
-                try {
-                    con.close();
-                } catch (SQLException ex) {
-                }
-            }
-        }
-        return false;
-    }
-
     
 }

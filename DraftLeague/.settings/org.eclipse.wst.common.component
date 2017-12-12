@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="DraftLeague">
+    <wb-module deploy-name="DraftLeague_new">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="DraftLeague"/>
-        <property name="java-output-path" value="/DraftLeague/build/classes"/>
+        <property name="context-root" value="DraftLeague_new"/>
+        <property name="java-output-path" value="/DraftLeague_new/build/classes"/>
     </wb-module>
 </project-modules>

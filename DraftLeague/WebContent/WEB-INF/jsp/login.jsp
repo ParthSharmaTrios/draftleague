@@ -46,7 +46,7 @@ $(function () {
                         Username or emailid
                     </td>
                     <td>
-                        <input type="text" name="username" id="username" value='<%=request.getParameter("username") == null ? "" : request.getParameter("username")%>'/>
+                        <input redquired type="text" name="username" id="username" value='<%=request.getParameter("username") == null ? "" : request.getParameter("username")%>'/>
                     </td>
                 </tr>
                 <tr>
@@ -72,7 +72,7 @@ $(function () {
                         <!--<input type="submit" value="Login"/>-->
                         Remember Me<input  name="rememberChkBox" id="rememberChkBox" type="checkbox">
                         <input type="reset" value="Clear"/>
-                        <input type="button" value="Login" onclick="validateLogin()"/>
+                        <input type="submit" value="Login"/>
                     </td>
                 </tr>
                 <tr>

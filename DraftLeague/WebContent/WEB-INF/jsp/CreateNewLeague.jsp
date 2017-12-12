@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Dashboard Page</title>
+  <title>${SportName}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
@@ -56,12 +56,22 @@
 
 <div class="container">
 
-	<h1>Welcome Name: <%= session.getAttribute("username") %></h1>
+	<h1> Create a new league for ${SportName}</h1>
+	
 	<br />
-	<h3>Collapsible Navbar</h3>
-	<p>In this example, the navigation bar is hidden on small screens and replaced by a button in the top right corner (try to re-size this window).
-	<p>Only when the button is clicked, the navigation bar will be displayed.</p>
-<p>Tip: You can also remove the .navbar-expand-md class to ALWAYS hide navbar links and display the toggler button.</p>
+	
+	<form method="post" action="../createLeague">
+	
+	<input type="hidden" name="UserId" value="<%= session.getAttribute("Id") %>">
+	<input type="hidden" name="SportId" value="${SportId}">
+	
+	League Name : <input type="text" name="leagueName"><br>
+	<input type="submit">
+	
+	</form>
+	
+	
+	
 </div>
 
 </body>
