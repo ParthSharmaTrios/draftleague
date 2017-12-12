@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -189,7 +190,20 @@ public class UserController {
 
         return "checkMail";
     }
+	
+	@RequestMapping(value="/Sport/{name}", method= RequestMethod.GET)
+    public String SportPage(@PathVariable(value="name") String name, ModelMap map) {
 
+        //Normally the parameter would be used to retrieve the object
+        //In this case we keep it simple and return the name
+      
+
+        
+        map.addAttribute("SportName", name);
+
+        return "SportPage";
+    }
+	
 	
 /*	
 	@RequestMapping(value="/resetPassword.html" , method=RequestMethod.POST)
