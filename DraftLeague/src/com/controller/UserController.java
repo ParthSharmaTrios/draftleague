@@ -4,8 +4,15 @@ import com.common.User;
 import com.model.DBConnection;
 import com.model.UserDAO;
 import com.model.Validations;
+import java.io.File;
+
 import com.model.MailService;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,7 +22,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 //@RequestMapping("/user")
@@ -229,5 +238,19 @@ public class UserController {
 	
 	
 	 
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public String handleFormUpload( 
+			@RequestParam("file") MultipartFile file) throws IOException{
+			if (!file.isEmpty()) {
+			BufferedImage src = ImageIO.read(new ByteArrayInputStream(file.getBytes()));
+			File destination = new File("C:\\Users\\ParthSharma\\Desktop\\draftleague\\DraftLeague\\WebContent\\1.png"); // something like C:/Users/tom/Documents/nameBasedOnSomeId.png
+			ImageIO.write(src, "png", destination);
+			
+		
+	 //Save the id you have used to create the file name in the DB. You can retrieve the image in future with the ID.
+	 }
+			return "AccountSettings";
+	}
+
 
 }

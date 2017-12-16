@@ -39,8 +39,8 @@
               <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= session.getAttribute("username") %></a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">
                 <a class="dropdown-item" href="/profile">Profile</a>
-                <a class="dropdown-item" href="/DraftLeague/AccountSettings.html">Account Settings</a>
-                <a class="dropdown-item" href="/DraftLeague/logout.html">Logout</a>
+                <a class="dropdown-item" href="AccountSettings.html">Account Settings</a>
+                <a class="dropdown-item" href="logout.html">Logout</a>
               </div>
         </li>
         <% } %>
