@@ -16,14 +16,8 @@
                         http://activemq.apache.org/schema/core/activemq-core.xsd">
 
     <mvc:annotation-driven />
-    
-    <mvc:resources mapping="/images/**" location="/images/" />
-    <mvc:resources mapping="/js/**" location="/js/" />
-        <mvc:resources mapping="/css/**" location="/css/" />
-    
-     <bean id="multipartResolver"
-    class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
-    
+    <mvc:resources mapping="/images/**" location="/images/"></mvc:resources>
+    <mvc:resources mapping="/js/**" location ="/js/"></mvc:resources>
     <context:component-scan base-package="com" />
     
     		
@@ -32,6 +26,10 @@
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp" />
+          
+       <bean id="multipartResolver"
+   			 class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+           
 
     <!--<bean id="locationDAO" class="com.model.LocationDAOImpl" />-->
     <!--<bean id="userDAO" class="com.model.UserDAOImpl" />-->

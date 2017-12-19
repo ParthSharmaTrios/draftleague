@@ -1,3 +1,36 @@
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.io.*"%>
+<%@page import="java.sql.Connection" %>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.SQLException"%>
+<%@page import="java.sql.PreparedStatement" %>
+<%@page import="java.sql.Statement" %>
+<%@page import="org.springframework.stereotype.Service"%>
+<%@page import="com.model.DBConnection"%>
+<%@page import="com.common.getResultSet"%>
+<%@page import="java.text.DateFormat"%>
+<%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.util.Date"%>
+ 
+
+
+
+<%
+int userId= (int)session.getAttribute("Id");
+System.out.println("UserId in Dashboard"+userId);
+Connection con = null;
+ResultSet rs = null;
+try {
+    con = DBConnection.getDBConnection();
+    Statement stmt = con.createStatement();
+     rs = stmt.executeQuery("select * from leagues where userid = " + userId);
+   
+} catch (SQLException | ClassNotFoundException ex) {
+    ex.printStackTrace();
+}
+%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,8 +63,8 @@
         <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Signup/Login</a>
               <div class="dropdown-menu" aria-labelledby="dropdown01">
-                <a class="dropdown-item" href="/register.html">Sign Up</a>
-                <a class="dropdown-item" href="/login.html">Login</a>
+                <a class="dropdown-item" href="register.html">Sign Up</a>
+                <a class="dropdown-item" href="login.html">Login</a>
               </div>
         </li>
       <% } else { %>
@@ -58,11 +91,40 @@
 
 	<h1>Welcome Name: <%= session.getAttribute("username") %></h1>
 	<br />
-	<h3>Collapsible Navbar</h3>
-	<p>In this example, the navigation bar is hidden on small screens and replaced by a button in the top right corner (try to re-size this window).
-	<p>Only when the button is clicked, the navigation bar will be displayed.</p>
-<p>Tip: You can also remove the .navbar-expand-md class to ALWAYS hide navbar links and display the toggler button.</p>
-</div>
+	</div>
+	<Table border ="1">
+	<% if(rs.next()) 
+	{
+		 %>
+<tr>
+<Th>LeagueName</Th>
+<th> Contest Type</th>
+<th> Sport Name </th>
+<th>Draft Date</th>
+<th>Draft Time</th>
+<th>Draft Type</th>
+</tr>
+	
+	<%
+	rs.beforeFirst();
+	
+ 	 while(rs.next()) 
+		{
+		 System.out.println("entered resultset");
+		
+		
+		%>
+<tr>
+<td><%=rs.getString(2) %></td>
+<td><%=getResultSet.getResult(Integer.parseInt(rs.getString(3)), "ContestType")%></td>
+<td><%=getResultSet.getResult(Integer.parseInt(rs.getString(5)), "Sports")%></td>
+<td><%=rs.getString(6)%></td>
+<td><%=rs.getString(7) %></td>
+<td><%=rs.getString(8) %></td>
 
+</tr>
+		<%} %>
+</Table>
+<%} %>
 </body>
 </html>

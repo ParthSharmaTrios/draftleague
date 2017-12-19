@@ -9,6 +9,7 @@ public class User {
     private String password;
     private String email;
     private String phone;
+    private String dispic;
 
     /**
      * @return the id
@@ -93,5 +94,16 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+    public String getPic() {
+        return dispic;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setPic(String dispic) {
+        this.dispic = dispic;
+    }
+
     
 }
