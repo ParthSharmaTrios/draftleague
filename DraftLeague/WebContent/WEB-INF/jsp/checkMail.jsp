@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Check email</title>
 </head>
 <body>
 <h4>Please check your email for password reset link. If you are registered with us you would have got it by now.</h4>

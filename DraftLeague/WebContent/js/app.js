@@ -97,21 +97,15 @@ function cancelEditProfile() {
 }
 
 function validatePassword() {
-    var oldpass = document.getElementById("oldpass").value;
-    var newpass = document.getElementById("newpass").value;
-    var newpass1 = document.getElementById("newpass1").value;
+	console.log("enetered validate pass");
+    var password1 = document.getElementById("txtPass1").value;
+    var password2 = document.getElementById("txtPass2").value;
     
-    if(oldpass === "") {
-        alert("Enter old password");
-        return false;
-    } else if(newpass === "") {
-        alert("Enter new password");
-        return false;
-    } else if(newpass !== newpass1) {
-        alert("New password doesn't match");
+   if(password1 !== password2) {
+        alert("The passwords do not match");
         return false;
     } else {
-        return true;
+    	return true;   
     }
 }
 

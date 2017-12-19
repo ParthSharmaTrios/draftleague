@@ -7,24 +7,28 @@
 <title>Home Page</title>
 </head>
 <body>
-Enter New Password for ${emailid}
-	<form action="#">
+	<form action="./newPassword" method="post" onsubmit=" return validatePassword()" id="updatePassfrm">
 		<table>
 			<tr>
 				<td>Password</td>
-				<td><input type="password" id="txtPass"> </td>
+				<td><input type="password" name = "txtPass1" id="txtPass1"> </td>
 			</tr>
 			<tr>
 				<td>Retype-Password</td>
-				<td><input type="password" id="txtPass"> </td>
+				<td><input type="password" id="txtPass2"> </td>
 			</tr>
 			<tr>
 			
-				<td colspan="2"><center><input type="button" value="Save"> </center> </td>
+				<td colspan="2"><center><input type="submit" value="Save"> </center> </td>
 			
 			</tr>
 			
 		</table>
+		<input type="hidden" name="token" value="${token}">
+	
 	</form>
+	     <script type="text/javascript" src="./js/jquery-3.1.0.min.js"></script>
+                    <script type="text/javascript" src="./js/app.js"></script>
+	
 </body>
 </html>

@@ -1,5 +1,6 @@
 <%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
  
 <% int year = Calendar.getInstance().get(Calendar.YEAR); request.setAttribute("year", year); %>
 <!DOCTYPE html>
@@ -10,9 +11,10 @@
        
     </head>
     <body>
-    	<form action="./AccountSettings.html" method="post" onsubmit="return ValidateUpdateUser()" id="AcctSettingsfrm" enctype="multipart/form-data">>
+    	<form action="./AccountSettings.html" method="post" onsubmit="return ValidateUpdateUser()" id="AcctSettingsfrm" enctype="multipart/form-data">
+    	
     	<%= session.getAttribute("username") %> Please update the details and then click update
-         <img alt="profile" src="./images/profilepic.jpeg" height="100" width="100"/>
+         <img alt="profile" src='<%=session.getAttribute("pic")%>' height="100" width="100" style="height:200px; background-color:red;"/>
               <table>
                 <tr>
                     <td align="center">Update Details
@@ -35,9 +37,9 @@
                     </td>
                 </tr>
                  <tr>
-                    <td>Portrait Photo: </td>
-                    <td><input type="file" name="file" size="50"/></td>
-                </tr>
+                    <td>   Please select a photo to upload : </td>
+                    <td>  <input type="file" name="file" /></td>
+					</tr>
                
                 <tr>
                     <td colspan="2" style="color: red;">
@@ -56,18 +58,7 @@
             </table>
         </form>
         
-        
-        <h2>Spring MVC file upload example</h2>
-
-<form method="POST" action="upload" enctype="multipart/form-data">
-
-
-    Please select a file to upload : <input type="file" name="file" />
-    <input type="submit" value="upload" />
-
-</form>
-        
-       <script type="text/javascript" src="./js/jquery-3.1.0.min.js"></script>
+                    <script type="text/javascript" src="./js/jquery-3.1.0.min.js"></script>
                     <script type="text/javascript" src="./js/app.js"></script>
     </body>
 </html>
